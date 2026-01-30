@@ -76,7 +76,18 @@ public class SinglyLinkedList<E> implements List<E> {
 
     //@Override
     public int size() {
-        return size;
+        if(head == null) {
+            return 0;
+        }
+        else{
+            int  size = 0;
+            Node<E> curr = head;
+            while(curr != null) {   //just curr and not curr.getnext() because it skips the first
+                size++;
+                curr = curr.getNext();
+            }
+            return size;
+        }
     }
 
     //@Override
@@ -120,8 +131,7 @@ public class SinglyLinkedList<E> implements List<E> {
 
     @Override
     public E removeFirst() {
-        // TODO
-        return null;
+        return ;
     }
 
     @Override
