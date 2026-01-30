@@ -23,6 +23,8 @@ public class SinglyLinkedList<E> implements List<E> {
          */
         public Node(E e, Node<E> n) {
             // TODO
+            element = e;
+            next = n;
         }
 
         // Accessor methods
