@@ -36,7 +36,7 @@ public class SinglyLinkedList<E> implements List<E> {
          * @return the element stored at the node
          */
         public E getElement() {
-            return null;
+            return element;
         }
 
         /**
@@ -131,7 +131,7 @@ public class SinglyLinkedList<E> implements List<E> {
 
     @Override
     public E removeFirst() {
-        return ;
+        return null;
     }
 
     @Override
@@ -195,3 +195,5 @@ public class SinglyLinkedList<E> implements List<E> {
 
     }
 }
+
+//test commit
