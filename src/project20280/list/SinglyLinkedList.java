@@ -76,18 +76,20 @@ public class SinglyLinkedList<E> implements List<E> {
 
     //@Override
     public int size() {
-        if(head == null) {
-            return 0;
-        }
-        else{
-            int  size = 0;
-            Node<E> curr = head;
-            while(curr != null) {   //just curr and not curr.getnext() because it skips the first
-                size++;
-                curr = curr.getNext();
-            }
-            return size;
-        }
+//        if(head == null) {
+//            return 0;
+//        }
+//        else{
+//            int  size = 0;
+//            Node<E> curr = head;
+//            while(curr != null) {   //just curr and not curr.getnext() because it skips the first
+//                size++;
+//                curr = curr.getNext();
+//            }
+//            return size;
+//        }
+        //more efficient and less redundant
+        return size;
     }
 
     //@Override
@@ -104,11 +106,11 @@ public class SinglyLinkedList<E> implements List<E> {
     public E get(int position) {
         Node<E> curr = head;
 
-        if(position <= 0 || position > size) {
-            return null;
+        if(position < 0 || position >= size) {
+            throw new IndexOutOfBoundsException("Position is out of bounds " + position);
         }
         else{
-            for(int i = 1; i < position; i++) {
+            for(int i = 0; i < position; i++) {
                 curr = curr.getNext();
             }
         }
@@ -200,13 +202,43 @@ public class SinglyLinkedList<E> implements List<E> {
 
     @Override
     public E removeFirst() {
-        return null;
+        if(size == 0){
+            throw new IndexOutOfBoundsException("The list is empty");
+        }
+
+        Node<E> removedNode = head;
+
+        head  = head.getNext();
+        size--;
+
+        return removedNode.getElement();
     }
 
     @Override
     public E removeLast() {
-        // TODO
-        return null;
+        if(size == 0){
+            throw new IndexOutOfBoundsException("The list is empty");
+        }
+
+        Node<E> removedNode;
+
+        if (size == 1){
+            removedNode = head;
+            head = null;
+            size--;
+            return removedNode.getElement();
+        }
+
+        Node<E> curr =  head;
+
+        for(int i = 0; i < size - 2; i++){
+            curr = curr.getNext();
+        }
+
+        removedNode = curr.getNext();
+        curr.setNext(null);
+        size--;
+        return removedNode.getElement();
     }
 
     //@Override
