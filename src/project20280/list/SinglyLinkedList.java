@@ -145,21 +145,58 @@ public class SinglyLinkedList<E> implements List<E> {
 
     @Override
     public void addFirst(E e) {
-        head =  new Node<>(e, this.head);
+        head = new Node<>(e, this.head);
         size++;
-
+        return;
     }
 
     @Override
     public void addLast(E e) {
-        // TODO
+        if(size == 0){
+            addFirst(e);
+            return;
+        }
+
+        Node<E> curr = head;
+        while(curr.getNext() != null) {
+            curr = curr.getNext();
+        }
+        curr.setNext(new Node<>(e, null));
+        size++;
+
+        return;
     }
 
     @Override
     public E remove(int position) {
-        // TODO
-        return null;
+        if(size == 0){
+            throw new IndexOutOfBoundsException("The list is empty");
+        }
+
+        if(position < 0 || position >= size) {
+            throw new IndexOutOfBoundsException("Position out of bounds. Given position " + position);
+        }
+
+        Node<E> curr = head;
+        Node<E> removedNode;
+
+        if(position == 0){
+            removedNode = head;
+            head =  head.getNext();
+        }
+        else{
+            for(int i = 0; i < position - 1; i++){
+                curr = curr.getNext();
+            }
+
+            removedNode = curr.getNext();   //we need to return the node removed
+            curr.setNext(curr.getNext().getNext()); //getting rid of the node at position given
+        }
+
+        size--;
+        return removedNode.getElement();
     }
+
 
     @Override
     public E removeFirst() {
