@@ -118,19 +118,29 @@ public class SinglyLinkedList<E> implements List<E> {
     }
 
     @Override
-//    public void add(int position, E e) {
-//        if(position < 0 || position > size) {
-//            throw new IndexOutOfBoundsException("Position out of bounds. Given position " + position);
-//        }
-//        else{
-//            size++; //increase the size of the linked list
-//            for(int i = 1; i < position; i++){
-//               for(int j = 1; j < size; j++){
-//
-//               }
-//            }
-//        }
-//    }
+    public void add(int position, E e) {
+        //if position is not within range
+        if (position < 0 || position > size) {
+            throw new IndexOutOfBoundsException("Position out of bounds. Given position " + position);
+        }
+
+        if(size == 0 || position == 0){
+            addFirst(e);
+            return;
+        }
+
+        //if everything is ok
+        Node<E> curr = head; //to iterate through the linked list
+        for(int i = 0; i < position - 1; i++){ //stops at the one before
+            curr = curr.getNext();
+        }
+
+        Node<E> newNode = new Node<>(e, curr.getNext());    //new node points to previous' next
+        curr.setNext(newNode);  //previous' next is the new
+        size++; //increase the size of the linked list
+
+        return;
+    }
 
 
     @Override
