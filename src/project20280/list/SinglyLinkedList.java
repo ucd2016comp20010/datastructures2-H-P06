@@ -203,7 +203,7 @@ public class SinglyLinkedList<E> implements List<E> {
     @Override
     public E removeFirst() {
         if(size == 0){
-            throw new IndexOutOfBoundsException("The list is empty");
+            return null;
         }
 
         Node<E> removedNode = head;
