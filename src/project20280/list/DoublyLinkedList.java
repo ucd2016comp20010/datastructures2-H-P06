@@ -31,9 +31,9 @@ public class DoublyLinkedList<E> implements List<E> {
 
     }
 
-    private final Node<E> head;
+    private Node<E> head;   //!!!!!REMOVED FINAL!!!!!
     private final Node<E> tail;
-    private final int size = 0;
+    private int size = 0;   //!!!!!REMOVED FINAL!!!!!
 
     public DoublyLinkedList() {
         head = new Node<E>(null, null, null);
@@ -47,25 +47,50 @@ public class DoublyLinkedList<E> implements List<E> {
 
     @Override
     public int size() {
-        // TODO
-        return 0;
+        return size;
     }
 
     @Override
     public boolean isEmpty() {
-        // TODO
+        if(size == 0){
+            return true;
+        }
         return false;
     }
 
     @Override
     public E get(int i) {
-        // TODO
-        return null;
+        if(size == 0 || i < 0 || i >= size){
+            return null;
+        }
+
+        Node<E> curr = head;
+        for(int j = 0; j < i; j++){
+            curr = curr.getNext();
+        }
+
+        return curr.getData();
     }
 
     @Override
     public void add(int i, E e) {
-        // TODO
+
+        if(size == 0 || i < 0 || i > size){
+            Node<E> newNode = new Node<>(e, null, null);
+            head = newNode;
+            size++;
+            return;
+        }
+
+        Node<E> curr = head;
+        for(int j = 0; j < i - 1; j++){
+            curr = curr.getNext();
+        }
+
+        Node<E> newNode = new Node<>(e, curr, curr.getNext());
+        curr.next = newNode;
+        size++;
+        return;
     }
 
     @Override
