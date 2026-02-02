@@ -7,9 +7,9 @@ import java.util.Iterator;
 public class DoublyLinkedList<E> implements List<E> {
 
     private static class Node<E> {
-        private final E data;
+        private E data;
         private Node<E> next;
-        private final Node<E> prev;
+        private Node<E> prev;
 
         public Node(E e, Node<E> p, Node<E> n) {
             data = e;
@@ -31,9 +31,9 @@ public class DoublyLinkedList<E> implements List<E> {
 
     }
 
-    private Node<E> head;   //!!!!!REMOVED FINAL!!!!!
-    private final Node<E> tail;
-    private int size = 0;   //!!!!!REMOVED FINAL!!!!!
+    private Node<E> head;
+    private Node<E> tail;
+    private int size = 0;
 
     public DoublyLinkedList() {
         head = new Node<E>(null, null, null);
@@ -75,8 +75,23 @@ public class DoublyLinkedList<E> implements List<E> {
     @Override
     public void add(int i, E e) {
 
-        if(size == 0 || i < 0 || i > size){
-            Node<E> newNode = new Node<>(e, null, null);
+        if( i < 0 || i > size){
+            throw new IllegalArgumentException("Index out of range");
+        }
+
+        Node<E> newNode = new Node<>(e, null, null);
+
+
+        if(size == 0){
+            head = newNode;
+            tail = newNode;
+            size++;
+            return;
+        }
+
+        if(i == 0){
+            newNode.next = head;
+            head.prev = newNode;
             head = newNode;
             size++;
             return;
@@ -87,16 +102,64 @@ public class DoublyLinkedList<E> implements List<E> {
             curr = curr.getNext();
         }
 
-        Node<E> newNode = new Node<>(e, curr, curr.getNext());
+        newNode.next = curr.getNext();
+        newNode.prev = curr;
         curr.next = newNode;
+
+        //update next previous
+        if(curr.next != null){
+            curr.next.prev = newNode;
+        }
+        else{
+            tail = newNode;
+        }
         size++;
         return;
     }
 
     @Override
     public E remove(int i) {
-        // TODO
-        return null;
+        if(i < 0 || i > size){
+            throw new IllegalArgumentException("Index out of range");
+        }
+
+        if(size == 0){
+            return null;
+        }
+
+        if(i == 0){
+            Node<E> removed = head;
+            if(size == 1){
+                head = null;
+                tail = null;
+                return removed.getData();
+            }
+
+            head = head.next;
+            head.prev = null;
+            size--;
+            return removed.getData();
+        }
+
+        Node<E> curr = head;
+
+        //goes to the one before
+        for(int j = 0; j < i - 1; j++){
+            curr = curr.getNext();
+        }
+
+        Node<E> removed = curr.getNext();
+
+        curr.next = removed.next;
+
+        if(removed.next != null){
+            removed.next.prev = curr;
+        }
+        else{
+            tail = curr;
+        }
+        size--;
+        return removed.getData();
     }
 
     private class DoublyLinkedListIterator<E> implements Iterator<E> {
