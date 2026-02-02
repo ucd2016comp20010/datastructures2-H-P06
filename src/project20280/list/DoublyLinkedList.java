@@ -76,7 +76,7 @@ public class DoublyLinkedList<E> implements List<E> {
     public void add(int i, E e) {
 
         if( i < 0 || i > size){
-            throw new IllegalArgumentException("Index out of range");
+            return;
         }
 
         Node<E> newNode = new Node<>(e, null, null);
@@ -102,13 +102,15 @@ public class DoublyLinkedList<E> implements List<E> {
             curr = curr.getNext();
         }
 
+        Node<E> nextNode = curr.getNext();
+
         newNode.next = curr.getNext();
         newNode.prev = curr;
         curr.next = newNode;
 
         //update next previous
-        if(curr.next != null){
-            curr.next.prev = newNode;
+        if(nextNode != null){
+            nextNode.prev = newNode;
         }
         else{
             tail = newNode;
@@ -120,7 +122,7 @@ public class DoublyLinkedList<E> implements List<E> {
     @Override
     public E remove(int i) {
         if(i < 0 || i > size){
-            throw new IllegalArgumentException("Index out of range");
+            return null;
         }
 
         if(size == 0){
