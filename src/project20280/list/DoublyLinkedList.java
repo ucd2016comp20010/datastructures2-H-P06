@@ -35,6 +35,7 @@ public class DoublyLinkedList<E> implements List<E> {
     private Node<E> tail;
     private int size = 0;
 
+
     public DoublyLinkedList() {
         head = new Node<E>(null, null, null);
         tail = new Node<E>(null, head, null);
@@ -42,7 +43,11 @@ public class DoublyLinkedList<E> implements List<E> {
     }
 
     private void addBetween(E e, Node<E> pred, Node<E> succ) {
-        // TODO
+        Node<E> newNode =  new Node<E>(e, pred, succ);
+        pred.next = newNode;
+        succ.prev = newNode;
+        size++;
+        return;
     }
 
     @Override
@@ -121,7 +126,7 @@ public class DoublyLinkedList<E> implements List<E> {
 
     @Override
     public E remove(int i) {
-        if(i < 0 || i > size){
+        if(i < 0 || i >= size){
             return null;
         }
 
@@ -129,37 +134,38 @@ public class DoublyLinkedList<E> implements List<E> {
             return null;
         }
 
+        Node<E> removed;
+
         if(i == 0){
-            Node<E> removed = head;
-            if(size == 1){
-                head = null;
-                tail = null;
-                return removed.getData();
-            }
-
+            removed = head;
             head = head.next;
-            head.prev = null;
-            size--;
-            return removed.getData();
-        }
 
-        Node<E> curr = head;
-
-        //goes to the one before
-        for(int j = 0; j < i - 1; j++){
-            curr = curr.getNext();
-        }
-
-        Node<E> removed = curr.getNext();
-
-        curr.next = removed.next;
-
-        if(removed.next != null){
-            removed.next.prev = curr;
+            if(head != null){
+                head.prev = null;
+            }
+            else{
+                tail = null;
+            }
         }
         else{
-            tail = curr;
+            Node<E> curr = head;
+
+            for(int j = 0; j < i - 1; j++){
+                curr = curr.getNext();
+            }
+
+            removed = curr.getNext();
+
+            curr.next = removed.next;
+
+            if(removed.next != null){
+                removed.next.prev = curr;
+            }
+            else{
+                tail = curr;
+            }
         }
+
         size--;
         return removed.getData();
     }
@@ -186,7 +192,24 @@ public class DoublyLinkedList<E> implements List<E> {
     }
 
     private E remove(Node<E> n) {
-        // TODO
+//        if(size == 0){
+//            return null;
+//        }
+//
+//        if(n.prev != null){
+//            n.prev.next = n.next;
+//            return n.getData();
+//        }
+//        else{
+//            head = n.next;
+//        }
+//
+//        if(n.next != null){
+//            n.next.prev = n.prev;
+//        }
+//
+//        size--;
+//        return n.het;
         return null;
     }
 
@@ -194,34 +217,87 @@ public class DoublyLinkedList<E> implements List<E> {
         if (isEmpty()) {
             return null;
         }
-        return head.next.getData();
+        return head.getData();
     }
 
     public E last() {
-        // TODO
-        return null;
+        if(size == 0){
+            return null;
+        }
+
+        return tail.getData();
     }
 
     @Override
     public E removeFirst() {
-        // TODO
-        return null;
+        if(size == 0){
+            return null;
+        }
+        Node<E> removed = head;
+        head = head.next;
+
+        if (head != null){
+            head.prev = null;
+        }
+        else{
+            tail = null;
+        }
+        size--;
+        return removed.getData();
     }
 
     @Override
     public E removeLast() {
-        // TODO
-        return null;
+        if(size == 0){
+            return null;
+        }
+        Node<E> removed = tail;
+        tail = tail.prev;
+
+        if(tail != null){
+            tail.next = null;
+        }
+        else{
+            head = null;
+        }
+
+        size--;
+        return removed.getData();
     }
 
     @Override
     public void addLast(E e) {
-        // TODO
+        Node<E> newNode = new Node<>(e, null, null);
+        if(size == 0){
+            head = newNode;
+            tail = newNode;
+            size++;
+            return;
+        }
+
+        newNode.prev = tail;
+        newNode.next = null;
+        tail.next = newNode;
+        tail = newNode;
+        size++;
+        return;
     }
 
     @Override
     public void addFirst(E e) {
-        // TODO
+        Node<E> newNode = new Node<>(e, null,null);
+        if(size == 0){
+            head = newNode;
+            tail = newNode;
+            size++;
+            return;
+        }
+
+        newNode.next = head;
+        head.prev = newNode;
+        head = newNode;
+        size++;
+        return;
     }
 
     public String toString() {
@@ -252,8 +328,10 @@ public class DoublyLinkedList<E> implements List<E> {
         ll.removeLast();
         System.out.println(ll);
 
+
         for (Integer e : ll) {
             System.out.println("value: " + e);
         }
+
     }
 }

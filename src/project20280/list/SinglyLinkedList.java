@@ -134,7 +134,7 @@ public class SinglyLinkedList<E> implements List<E> {
         //if everything is ok
         Node<E> curr = head; //to iterate through the linked list
         for(int i = 0; i < position - 1; i++){ //stops at the one before
-            curr = curr.getNext();
+            curr = curr.next;
         }
 
         Node<E> newNode = new Node<>(e, curr.getNext());    //new node points to previous' next
