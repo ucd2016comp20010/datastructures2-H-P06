@@ -31,19 +31,20 @@ public class DoublyLinkedList<E> implements List<E> {
 
     }
 
-    private Node<E> head;
-    private Node<E> tail;
+    private Node<E> header;
+    private Node<E> trailer;
+
     private int size = 0;
 
-
     public DoublyLinkedList() {
-        head = new Node<E>(null, null, null);
-        tail = new Node<E>(null, head, null);
-        head.next = tail;
+        header = new Node<E>(null, null, null);
+        trailer = new Node<E>(null, header, null);
+        header.next = trailer;
     }
 
     private void addBetween(E e, Node<E> pred, Node<E> succ) {
-        Node<E> newNode =  new Node<E>(e, pred, succ);
+        // TODO
+        Node<E> newNode = new  Node<E>(e, pred, succ);
         pred.next = newNode;
         succ.prev = newNode;
         size++;
@@ -52,12 +53,14 @@ public class DoublyLinkedList<E> implements List<E> {
 
     @Override
     public int size() {
+        // TODO
         return size;
     }
 
     @Override
     public boolean isEmpty() {
-        if(size == 0){
+        // TODO
+        if(size == 0) {
             return true;
         }
         return false;
@@ -65,12 +68,13 @@ public class DoublyLinkedList<E> implements List<E> {
 
     @Override
     public E get(int i) {
-        if(size == 0 || i < 0 || i >= size){
+        // TODO
+        if(size == 0 || i < 0 || i >= size) {
             return null;
         }
 
-        Node<E> curr = head;
-        for(int j = 0; j < i; j++){
+        Node<E> curr = header;
+        for(int j = 0; j <= i; j++){
             curr = curr.getNext();
         }
 
@@ -79,103 +83,33 @@ public class DoublyLinkedList<E> implements List<E> {
 
     @Override
     public void add(int i, E e) {
-
-        if( i < 0 || i > size){
+        if(size == 0) {
+            addBetween(e, header, trailer);
             return;
         }
 
-        Node<E> newNode = new Node<>(e, null, null);
-
-
-        if(size == 0){
-            head = newNode;
-            tail = newNode;
-            size++;
+        Node<E> oldHead = header;
+        if(i == 0) {
+            Node<E> newNode = new Node<E>(e, null, oldHead);
+            header.prev = newNode;
+            header = newNode;
             return;
         }
 
-        if(i == 0){
-            newNode.next = head;
-            head.prev = newNode;
-            head = newNode;
-            size++;
-            return;
-        }
-
-        Node<E> curr = head;
-        for(int j = 0; j < i - 1; j++){
-            curr = curr.getNext();
-        }
-
-        Node<E> nextNode = curr.getNext();
-
-        newNode.next = curr.getNext();
-        newNode.prev = curr;
-        curr.next = newNode;
-
-        //update next previous
-        if(nextNode != null){
-            nextNode.prev = newNode;
-        }
-        else{
-            tail = newNode;
-        }
-        size++;
-        return;
     }
 
     @Override
     public E remove(int i) {
-        if(i < 0 || i >= size){
-            return null;
-        }
-
-        if(size == 0){
-            return null;
-        }
-
-        Node<E> removed;
-
-        if(i == 0){
-            removed = head;
-            head = head.next;
-
-            if(head != null){
-                head.prev = null;
-            }
-            else{
-                tail = null;
-            }
-        }
-        else{
-            Node<E> curr = head;
-
-            for(int j = 0; j < i - 1; j++){
-                curr = curr.getNext();
-            }
-
-            removed = curr.getNext();
-
-            curr.next = removed.next;
-
-            if(removed.next != null){
-                removed.next.prev = curr;
-            }
-            else{
-                tail = curr;
-            }
-        }
-
-        size--;
-        return removed.getData();
+        // TODO
+        return null;
     }
 
     private class DoublyLinkedListIterator<E> implements Iterator<E> {
-        Node<E> curr = (Node<E>) head.next;
+        Node<E> curr = (Node<E>) header.next;
 
         @Override
         public boolean hasNext() {
-            return curr != tail;
+            return curr != trailer;
         }
 
         @Override
@@ -192,24 +126,7 @@ public class DoublyLinkedList<E> implements List<E> {
     }
 
     private E remove(Node<E> n) {
-//        if(size == 0){
-//            return null;
-//        }
-//
-//        if(n.prev != null){
-//            n.prev.next = n.next;
-//            return n.getData();
-//        }
-//        else{
-//            head = n.next;
-//        }
-//
-//        if(n.next != null){
-//            n.next.prev = n.prev;
-//        }
-//
-//        size--;
-//        return n.het;
+        // TODO
         return null;
     }
 
@@ -217,96 +134,91 @@ public class DoublyLinkedList<E> implements List<E> {
         if (isEmpty()) {
             return null;
         }
-        return head.getData();
+        return header.next.getData();
     }
 
     public E last() {
-        if(size == 0){
+        if(isEmpty()) {
             return null;
         }
-
-        return tail.getData();
+        return trailer.prev.getData();
     }
 
     @Override
     public E removeFirst() {
+        // TODO
         if(size == 0){
             return null;
         }
-        Node<E> removed = head;
-        head = head.next;
 
-        if (head != null){
-            head.prev = null;
-        }
-        else{
-            tail = null;
-        }
+        Node<E> curr = header.next;
+        header.next = curr.next;
+        curr.next.prev = header;
+        curr.next = null;
+        curr.prev = null;
         size--;
-        return removed.getData();
+        return curr.getData();
     }
 
     @Override
     public E removeLast() {
+        // TODO
         if(size == 0){
             return null;
         }
-        Node<E> removed = tail;
-        tail = tail.prev;
 
-        if(tail != null){
-            tail.next = null;
-        }
-        else{
-            head = null;
-        }
+        Node<E> curr = trailer.prev;
+        curr.prev.next = trailer;
+        trailer.prev = curr.prev;
 
+
+        curr.prev = null;
+        curr.next = null;
         size--;
-        return removed.getData();
+        return curr.getData();
     }
 
     @Override
     public void addLast(E e) {
-        Node<E> newNode = new Node<>(e, null, null);
-        if(size == 0){
-            head = newNode;
-            tail = newNode;
-            size++;
+        // TODO
+        if(size  == 0) {
+            addFirst(e);
             return;
         }
 
-        newNode.prev = tail;
-        newNode.next = null;
-        tail.next = newNode;
-        tail = newNode;
-        size++;
-        return;
+        Node<E> oldtail = trailer.prev;
+        Node<E> newNode = new Node<E>(e, oldtail, trailer);
+        trailer.prev.next = newNode;
+        oldtail.prev = newNode;
+
     }
 
     @Override
     public void addFirst(E e) {
-        Node<E> newNode = new Node<>(e, null,null);
-        if(size == 0){
-            head = newNode;
-            tail = newNode;
+        // TODO
+        if(size == 0) {
+            Node<E> newNode = new Node<E>(e, header, trailer);
+            header.next = newNode;
+            trailer.prev = newNode;
             size++;
             return;
         }
 
-        newNode.next = head;
-        head.prev = newNode;
-        head = newNode;
+        Node<E> newNode = new Node<E>(e, header, header.next);
+        header.next.prev = newNode;
+        header.next = newNode;
+
         size++;
         return;
     }
 
     public String toString() {
         StringBuilder sb = new StringBuilder("[");
-        Node<E> curr = head.next;
-        while (curr != tail) {
+        Node<E> curr = header.next;
+        while (curr != trailer) {
             sb.append(curr.data);
             curr = curr.next;
-            if (curr != tail) {
+            if (curr != trailer) {
                 sb.append(", ");
             }
         }
@@ -317,21 +229,15 @@ public class DoublyLinkedList<E> implements List<E> {
     public static void main(String[] args) {
         DoublyLinkedList<Integer> ll = new DoublyLinkedList<Integer>();
         ll.addFirst(0);
-        ll.addFirst(1);
-        ll.addFirst(2);
-        ll.addLast(-1);
+        ll.addLast(100);
+        ll.addLast(200);
         System.out.println(ll);
 
-        ll.removeFirst();
+        System.out.println("removed " + ll.removeFirst());
         System.out.println(ll);
 
-        ll.removeLast();
+        System.out.println("removed " + ll.removeLast());
         System.out.println(ll);
-
-
-        for (Integer e : ll) {
-            System.out.println("value: " + e);
-        }
 
     }
 }
