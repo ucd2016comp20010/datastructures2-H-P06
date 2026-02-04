@@ -60,10 +60,7 @@ public class DoublyLinkedList<E> implements List<E> {
     @Override
     public boolean isEmpty() {
         // TODO
-        if(size == 0) {
-            return true;
-        }
-        return false;
+        return size == 0;
     }
 
     @Override
@@ -90,18 +87,42 @@ public class DoublyLinkedList<E> implements List<E> {
 
         Node<E> oldHead = header;
         if(i == 0) {
-            Node<E> newNode = new Node<E>(e, null, oldHead);
-            header.prev = newNode;
-            header = newNode;
-            return;
+            addFirst(e);
         }
 
+        Node<E> curr = header;
+        for(int j = 0; j <= i-1; j++){
+            curr = curr.next;
+        }
+
+        Node<E> oneBefore = curr;
+        Node<E> newNode = new Node<E>(e, curr, oneBefore.next);
+        oneBefore.prev = newNode;
+        curr.next = newNode;
+        size++;
+        return;
     }
 
     @Override
     public E remove(int i) {
-        // TODO
-        return null;
+        //
+        if(size == 0){
+            return null;
+        }
+
+        if(i < 0 || i >= size) {
+            return null;
+        }
+
+        Node<E> curr = header; //first element
+        for(int j = 0; j < i; j++){
+            curr = curr.getNext();
+        }
+        Node<E> toRemove = curr.getNext();
+        curr.next = toRemove.getNext();
+        size--;
+        return toRemove.getData();
+
     }
 
     private class DoublyLinkedListIterator<E> implements Iterator<E> {
@@ -186,11 +207,13 @@ public class DoublyLinkedList<E> implements List<E> {
             return;
         }
 
-        Node<E> oldtail = trailer.prev;
-        Node<E> newNode = new Node<E>(e, oldtail, trailer);
-        trailer.prev.next = newNode;
-        oldtail.prev = newNode;
+        Node<E> oldTail =  trailer.prev;
+        Node<E> newNode = new Node<E>(e, oldTail, trailer);
+        trailer.prev = newNode;
+        oldTail.next = newNode;
+        size++;
 
+        return;
     }
 
     @Override
@@ -233,7 +256,7 @@ public class DoublyLinkedList<E> implements List<E> {
         ll.addLast(200);
         System.out.println(ll);
 
-        System.out.println("removed " + ll.removeFirst());
+        System.out.println("removed " + ll.remove(0));
         System.out.println(ll);
 
         System.out.println("removed " + ll.removeLast());
