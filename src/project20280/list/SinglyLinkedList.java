@@ -2,7 +2,9 @@ package project20280.list;
 
 import project20280.interfaces.List;
 
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 public class SinglyLinkedList<E> implements List<E> {
 
@@ -275,6 +277,58 @@ public class SinglyLinkedList<E> implements List<E> {
         return sb.toString();
     }
 
+    public boolean compareLess(E e2) {
+        if(this < e2){
+            return true;
+        }
+
+        return false;
+    }
+
+    //THE SORTMERGE I MADE
+//    public SinglyLinkedList<> sortMerge(SinglyLinkedList<E> l2){
+//        Node<E> l1 = this.head;
+//        Node<E> l2 = l2.head;
+//
+//        while(l2.next != null && l1 < l2){
+//            l2 = l2.next;
+//        }
+//
+//        head = l1.getElement();
+//        l1.next = l2.getElement();
+//
+//
+//
+//        return this;
+//    }
+
+    //THE CLONE I MADE
+    public SinglyLinkedList<E> clone() {
+        SinglyLinkedList<E> twin = new SinglyLinkedList<E>();
+        Node<E> temp = head;
+        while(temp != null){
+            twin.addLast(temp.getElement());
+            temp = temp.next;
+        }
+        return twin;
+    }
+
+    //THE REVERSE I MADE
+    public SinglyLinkedList<E> reverse() {
+        Node<E> prev = null;
+        Node<E> curr = head;
+        Node<E> next;
+
+        while(curr != null){
+            next = curr.getNext();
+            curr.setNext(prev);
+            prev = curr;
+            curr = next;
+        }
+        head = prev;
+        return this;
+    }
+
     public static void main(String[] args) {
         SinglyLinkedList<Integer> ll = new SinglyLinkedList<Integer>();
         System.out.println("ll " + ll + " isEmpty: " + ll.isEmpty());
@@ -286,14 +340,20 @@ public class SinglyLinkedList<E> implements List<E> {
         ll.addFirst(3);
         ll.addFirst(4);
         ll.addLast(-1);
-        //ll.removeLast();
-        //ll.removeFirst();
-        //System.out.println("I accept your apology");
-        //ll.add(3, 2);
+
         System.out.println(ll);
         ll.remove(5);
         System.out.println(ll);
 
+        System.out.println("this is the clone " + ll.clone());
+        System.out.println("This is a reverse " + ll.reverse());
+
+        SinglyLinkedList<Integer> ll2 = new SinglyLinkedList<Integer>();
+        ll2.addFirst(5);
+        ll2.addFirst(6);
+        System.out.println("this is the new linked list "+ll2);
+
+        System.out.println("this is the sortmerge " + ll.sortMerge(ll2));
     }
 }
 

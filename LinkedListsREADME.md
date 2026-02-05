@@ -12,4 +12,6 @@ You would prefer a linked list over an array if you want to add or remove consta
 
 Q8. Describe 2 possible use-cases for a circularly linked list (2-3 sentences for each).
 
-A circularly linked list could be used to 
+A circularly linked list could be used if you wanted to make a playlist and you wanted it to be cyclic or if you wanted to have stacked widgets on your phone that returns loops around when you reach the end
+
+Q9, 10, 11. See SinglyLinkedList.java
