@@ -53,7 +53,7 @@ public class CircularlyLinkedList<E> implements List<E> {
 
         Node<E> curr = tail.next;
 
-        for(int j = 0; j <= i; j++){
+        for(int j = 0; j < i; j++){
             curr = curr.next;
         }
 
@@ -102,19 +102,39 @@ public class CircularlyLinkedList<E> implements List<E> {
             return null;
         }
 
-        Node<E> head = tail.next;
-        for(int j = 0; j < i; j++){
-            head = head.next;
+        Node<E> curr = tail.next;
+        for(int j = 0; j < i-1; j++){
+            curr = curr.next;
         }
 
-        Node<E> removed = head.next;
-        head.setNext(head.next.next);
+        Node<E> removed = curr.next;
+        curr.setNext(curr.next.next);
         size--;
         return removed.getData();
     }
 
     public void rotate() {
         // TODO
+        if(size == 0){
+            return;
+        }
+
+        //this works fine
+        if(size == 2){
+            Node<E> temp = tail;
+            tail = tail.next;
+            tail.next = temp;
+            return;
+        }
+
+        Node<E> curr = tail.next;
+        for(int i = 0; i < size; i++){
+            curr = curr.next;
+        }
+
+
+
+        return;
     }
 
     private class CircularlyLinkedListIterator<E> implements Iterator<E> {
@@ -232,9 +252,9 @@ public class CircularlyLinkedList<E> implements List<E> {
         ll.addLast(2);
         ll.addLast(3);
 
-        ll.add(1, 4);
-        ll.removeLast();
+        ll.rotate();
         System.out.println(ll.toString());
+
 
     }
 }
