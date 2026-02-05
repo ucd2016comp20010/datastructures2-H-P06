@@ -3,6 +3,7 @@ package project20280.list;
 import project20280.interfaces.List;
 
 import java.util.Iterator;
+import java.util.stream.IntStream;
 
 public class CircularlyLinkedList<E> implements List<E> {
 
@@ -127,12 +128,9 @@ public class CircularlyLinkedList<E> implements List<E> {
             return;
         }
 
-        Node<E> curr = tail.next;
-        for(int i = 0; i < size; i++){
-            curr = curr.next;
-        }
-
-
+        Node <E> head = tail.next;
+        tail = tail.next;
+        head = head.next;
 
         return;
     }
@@ -247,13 +245,15 @@ public class CircularlyLinkedList<E> implements List<E> {
 
 
     public static void main(String[] args) {
-        CircularlyLinkedList<Integer> ll = new CircularlyLinkedList<Integer>();
-        ll.addFirst(1);
-        ll.addLast(2);
-        ll.addLast(3);
+//        CircularlyLinkedList<Integer> ll = new CircularlyLinkedList<Integer>();
+//        ll.addFirst(1);
+//        ll.addLast(2);
+//        ll.addLast(3);
+//
 
-        ll.rotate();
-        System.out.println(ll.toString());
+        CircularlyLinkedList<Integer> ll2 = new CircularlyLinkedList<Integer>();
+        IntStream.rangeClosed(0, 10).forEach((x) -> ll2.addLast(x));
+        System.out.println(ll2.toString());
 
 
     }
