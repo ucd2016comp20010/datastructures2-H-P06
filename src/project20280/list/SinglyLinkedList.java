@@ -278,14 +278,6 @@ public class SinglyLinkedList<E> implements List<E> {
         return sb.toString();
     }
 
-    public boolean compareLess(E e2) {
-        if(this < e2){
-            return true;
-        }
-
-        return false;
-    }
-
     //THE SORTMERGE I MADE
     public SinglyLinkedList<E> sortMerge(SinglyLinkedList<E> l2){
         Node<E> l1Head = this.head;
