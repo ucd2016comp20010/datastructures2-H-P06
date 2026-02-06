@@ -39,8 +39,12 @@ public class ArrayQueue<E> implements Queue<E> {
             return;
         }
 
-        //or else add to the most recent one
+        //its full
+        if(size == data.length){
+            return;
+        }
 
+        //or else add to the most recent one
         data[size] = e;
         size++;
         return;
