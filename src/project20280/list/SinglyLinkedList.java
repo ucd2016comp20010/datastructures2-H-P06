@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+
 public class SinglyLinkedList<E> implements List<E> {
 
     private static class Node<E> {
@@ -286,21 +287,53 @@ public class SinglyLinkedList<E> implements List<E> {
     }
 
     //THE SORTMERGE I MADE
-//    public SinglyLinkedList<> sortMerge(SinglyLinkedList<E> l2){
-//        Node<E> l1 = this.head;
-//        Node<E> l2 = l2.head;
-//
-//        while(l2.next != null && l1 < l2){
-//            l2 = l2.next;
-//        }
-//
-//        head = l1.getElement();
-//        l1.next = l2.getElement();
-//
-//
-//
-//        return this;
-//    }
+    public SinglyLinkedList<E> sortMerge(SinglyLinkedList<E> l2){
+        Node<E> l1Head = this.head;
+        Node<E> l2Head = l2.head;
+        Node<E> mergedHead;
+        Node<E> tail;
+
+        //initialise head
+        if(l1Head.getElement() <= l2Head.getElement()){
+            mergedHead = tail = l1Head;
+            l1Head = l1Head.getNext();
+        }
+
+        if(l2Head.getElement() <= l1Head.getElement()){
+            mergedHead = tail = l2Head;
+            l2Head = l2Head.getNext();
+        }
+
+        //merging
+        while(l1Head != null && l2Head != null){
+            if(l1Head.getElement() <= l2Head.getElement()){
+                tail.next = l1Head;
+                l1Head = l1Head.getNext();
+            }
+            else{
+                tail.next = l2Head;
+                l2Head = l2Head.getNext();
+            }
+
+            tail = tail.next;
+        }
+
+        //at this point, one of the lists will be null
+        if(l1Head != null){
+            tail.next = l1Head;
+        }
+        else{
+            tail.next = l2Head;
+        }
+
+
+        SinglyLinkedList<E> newMerged = new SinglyLinkedList<>();
+        newMerged.head = mergedHead;
+
+        //since its already all linked
+        return newMerged;
+
+    }
 
     //THE CLONE I MADE
     public SinglyLinkedList<E> clone() {
