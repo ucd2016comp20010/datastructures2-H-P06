@@ -379,6 +379,7 @@ public class SinglyLinkedList<E> implements List<E> {
         System.out.println("this is the new linked list "+ll2);
 
         //System.out.println("this is the sortmerge " + ll.sortMerge(ll2));
+
     }
 }
 
