@@ -34,6 +34,7 @@ public class ArrayStack<E> implements Stack<E> {
     @SuppressWarnings({"unchecked"})
     public ArrayStack(int capacity) {        // constructs stack with given capacity
         // TODO
+        data = (E[]) new Object[capacity];
     }
 
     /**
@@ -65,6 +66,19 @@ public class ArrayStack<E> implements Stack<E> {
     @Override
     public void push(E e) {
         // TODO
+        //if the stack is empty
+        if(t == -1){
+            t++;
+            data[t] = e;
+            return;
+        }
+
+        if(t == data.length-1){
+            return;
+        }
+
+        t++;
+        data[t] = e;
     }
 
     /**
@@ -75,7 +89,11 @@ public class ArrayStack<E> implements Stack<E> {
     @Override
     public E top() {
         // TODO
-        return null;
+        if(t == -1){
+            return null;
+        }
+
+        return data[t];
     }
 
     /**
@@ -86,7 +104,16 @@ public class ArrayStack<E> implements Stack<E> {
     @Override
     public E pop() {
         // TODO
-        return null;
+        //if empty
+        if(t == -1){
+            return null;
+        }
+
+
+        E removed = data[t];
+        data[t] = null;
+        t--;
+        return removed;
     }
 
     /**
