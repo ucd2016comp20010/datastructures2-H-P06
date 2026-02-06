@@ -28,7 +28,7 @@ public class LinkedStack<E> implements Stack<E> {
     @Override
     public void push(E e) {
         // TODO
-        ll.addLast(e);
+        ll.addFirst(e);
         return;
     }
 
@@ -39,7 +39,7 @@ public class LinkedStack<E> implements Stack<E> {
             return null;
         }
 
-        return ll.last();
+        return ll.first();
     }
 
     @Override
@@ -48,8 +48,8 @@ public class LinkedStack<E> implements Stack<E> {
         if (ll.isEmpty()) {
             return null;
         }
-        E pop = ll.last();
-        ll.removeLast();
+        E pop = ll.first();
+        ll.removeFirst();
         return pop;
     }
 
