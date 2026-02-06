@@ -40,6 +40,7 @@ public class ArrayQueue<E> implements Queue<E> {
         }
 
         //or else add to the most recent one
+
         data[size] = e;
         size++;
         return;
@@ -53,7 +54,15 @@ public class ArrayQueue<E> implements Queue<E> {
     @Override
     public E dequeue() {
         // TODO
-        return null;
+        if(size == 0){
+            return null;
+        }
+
+        E remove = data[front];
+        data[front] = null;
+        front = front + 1;
+        size--;
+        return remove;
     }
 
     public String toString() {

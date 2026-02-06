@@ -41,7 +41,7 @@ class ArrayQueueTest {
         Queue<Integer> s = new ArrayQueue<>();
         for (int i = 0; i < 10; ++i)
             s.enqueue(i);
-        assertEquals(0, Optional.ofNullable(s.first()));
+        assertEquals(0, s.first()); //removed optionalofnullable
     }
 
     @Test
@@ -50,7 +50,7 @@ class ArrayQueueTest {
         for (int i = 0; i < 10; ++i)
             s.enqueue(i);
 
-        assertEquals(0, Optional.ofNullable(s.dequeue()));
+        assertEquals(0, s.dequeue()); //removed optional
         assertEquals(9, s.size());
     }
 
