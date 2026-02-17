@@ -331,7 +331,23 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
             throw new IllegalArgumentException("This is has 2 children :(");
         }
 
-        if(pNode.getLeft() != null){
+        //if the node is a leaf
+        if(pNode.getLeft() == null && pNode.getRight() == null){
+            if (pNode == root) {
+                root = null;
+            } else {
+                Node<E> parent = pNode.getParent();
+                if (pNode == parent.getLeft()) {
+                    parent.setLeft(null);  // Parent's left pointer becomes null
+                } else {
+                    parent.setRight(null); // Parent's right pointer becomes null
+                }
+            }
+
+        }
+
+        //dealing with if it's getting the left child
+        else if(pNode.getLeft() != null){
             Node<E> child = pNode.getLeft();
             child.setParent(pNode.getParent());
 
@@ -347,7 +363,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         }
 
         //for the right child
-        if(pNode.getRight() != null){
+        else if(pNode.getRight() != null){
             Node<E> child = pNode.getRight();
             child.setParent(pNode.getParent());
 
@@ -362,8 +378,11 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
             }
         }
 
-        //what if it was a leaf node?
-
+        //clean up
+        pNode.setParent(null);
+        pNode.setElement(null);
+        pNode.setLeft(null);
+        pNode.setRight(null);
         size--;
 
         return removedElement;
