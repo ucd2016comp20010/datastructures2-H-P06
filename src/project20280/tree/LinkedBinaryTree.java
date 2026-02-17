@@ -176,14 +176,28 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
     private Node<E> addRecursive(Node<E> p, E e) {
         // TODO
         if(p == null) {
-            size++;
             p =  createNode(e, null, null, null);
+            size++;
             return p;
         }
 
-        //finish this
+        //choosing the null side to add to
+        if(p.getLeft() == null){
+            Node<E> newNode = addRecursive(p.getLeft(), e);
+            p.setLeft(newNode);
+            newNode.setParent(p);
+        }
+        else if(p.getRight() == null){
+            Node<E> newNode = addRecursive(p.getRight(), e);
+            p.setRight(newNode);
+            newNode.setParent(p);
+        }
+        else{//both are not null
+            p.setLeft(addRecursive(p.getLeft(), e));    //find where to put e in the subtree
+            p.getLeft().setParent(p);   //link to the main tree
+        }
 
-        return null;
+        return p;
     }
 
     /**
