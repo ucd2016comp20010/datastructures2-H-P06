@@ -255,7 +255,12 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
      */
     public E set(Position<E> p, E e) throws IllegalArgumentException {
         // TODO
-        return null;
+
+        Node<E> pNode = validate(p);    //at this point it becomes a Node
+        E oldElement = pNode.getElement();
+
+        pNode.setElement(e);
+        return oldElement;
     }
 
     /**
