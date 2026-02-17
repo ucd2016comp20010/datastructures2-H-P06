@@ -161,15 +161,20 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
             return null;
         }
 
-        root = createNode(e, root, root, null);
+        root = createNode(e, null, null, null);
         size++;
         return root;
     }
 
     public void insert(E e) {
         // TODO
-
-
+        if(isEmpty()){
+            addRoot(e);
+            return;
+        }
+        else{
+            addRecursive(root, e);
+        }
     }
 
     // recursively add Nodes to binary tree in proper position
@@ -300,7 +305,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         //because setLeft expects us to give it a node
         //not a whole tree
         if(!t1.isEmpty()){
-            Node<E> t1RootasNode = (Node<E>) t2.root();
+            Node<E> t1RootasNode = (Node<E>) t1.root();
             nodeP.setLeft(t1RootasNode);
             t1RootasNode.setParent(nodeP);
 
@@ -411,7 +416,8 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
     //creates the rest of the tree you just needed to call it to make the root
     public void createLevelOrder(ArrayList<E> l) {
         // TODO
-        createLevelOrderHelper(l,null,0);
+        this.size = 0;
+        this.root = createLevelOrderHelper(l,null,0);
 
     }
 
@@ -425,6 +431,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
 
         //creates the node at said position
         Node<E> curr = createNode(l.get(i), p, null, null);
+        size++;
 
         //left child
         curr.setLeft(createLevelOrderHelper(l, curr, 2* i + 1));
@@ -448,6 +455,7 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
 
         //creates the node at said position
         Node<E> curr = createNode(arr[i], p, null, null);
+        size++;
 
         //left child
         curr.setLeft(createLevelOrderHelper(arr, curr, 2* i + 1));
