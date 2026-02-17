@@ -275,6 +275,42 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
      */
     public void attach(Position<E> p, LinkedBinaryTree<E> t1, LinkedBinaryTree<E> t2) throws IllegalArgumentException {
         // TODO
+        Node<E> nodeP = validate(p);
+
+        //it isn't a leaf
+        if(nodeP.getLeft() != null || nodeP.getRight() != null){
+            throw new IllegalArgumentException("This is not a leaf :(");
+        }
+
+        //we need to set the root to a node so we can attach it
+        //because setLeft expects us to give it a node
+        //not a whole tree
+        if(!t1.isEmpty()){
+            Node<E> t1RootasNode = (Node<E>) t2.root();
+            nodeP.setLeft(t1RootasNode);
+            t1RootasNode.setParent(nodeP);
+
+            size += t1.size;
+
+            //these shouldn't exist anymore since we merge trees
+            t1.root = null;
+            t1.size = 0;
+        }
+
+        //do the same for t2
+        if(!t2.isEmpty()){
+            Node<E> t2RootasNode = (Node<E>) t2.root();
+            nodeP.setRight(t2RootasNode);
+            t2RootasNode.setParent(nodeP);
+
+            size += t2.size;
+
+            //these shouldn't exist anymore since we are merging trees
+            t2.root = null;
+            t2.size = 0;
+        }
+
+        return;
     }
 
     /**
@@ -287,7 +323,31 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
      */
     public E remove(Position<E> p) throws IllegalArgumentException {
         // TODO
-        return null;
+        Node<E> pNode = validate(p);
+        E removedElement = pNode.getElement();
+
+        //check if it has 2 children
+        if(pNode.getLeft() != null && pNode.getRight() != null){
+            throw new IllegalArgumentException("This is has 2 children :(");
+        }
+
+//        if(pNode.getLeft() != null){
+//            Node<E> ogNode = pNode;
+//            pNode.getLeft().setParent(pNode.getParent());
+//            pNode.getLeft().setRight(pNode.getRight());
+//            pNode.
+//
+//
+//
+//        }
+
+//        if(pNode.getRight() != null){
+//            pNode.setElement(pNode.getRight());
+//            pNode.setRight(null);
+//            size--;
+//        }
+
+        return removedElement;
     }
 
     public String toString() {
