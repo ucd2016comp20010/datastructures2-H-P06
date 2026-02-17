@@ -79,6 +79,9 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
      * @return the underlying Node instance for the position
      * @throws IllegalArgumentException if an invalid position is detected
      */
+
+    //checks if the position given is able to be in the tree
+    //and it turns the position into a node
     protected Node<E> validate(Position<E> p) throws IllegalArgumentException {
         if (!(p instanceof Node)) throw new IllegalArgumentException("Not valid position type");
         Node<E> node = (Node<E>) p; // safe cast
@@ -154,17 +157,32 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
      */
     public Position<E> addRoot(E e) throws IllegalStateException {
         // TODO
-        return null;
+        if(size!=0){
+            return null;
+        }
+
+        root = createNode(e, root, root, null);
+        size++;
+        return root;
     }
 
     public void insert(E e) {
         // TODO
+
 
     }
 
     // recursively add Nodes to binary tree in proper position
     private Node<E> addRecursive(Node<E> p, E e) {
         // TODO
+        if(p == null) {
+            size++;
+            p =  createNode(e, null, null, null);
+            return p;
+        }
+
+        //finish this
+
         return null;
     }
 
@@ -180,7 +198,26 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
      */
     public Position<E> addLeft(Position<E> p, E e) throws IllegalArgumentException {
         // TODO
-        return null;
+        if(p == null) {
+            return null;
+        }
+
+        //if the position is valid, it turns it into a node
+        Node<E> pNode = validate(p);
+
+        //theres something in there
+        if(pNode.getLeft() != null){
+            return null;
+        }
+
+
+        //creating the node with info e
+        Node<E> leftNode = createNode(e, pNode, null, null);
+
+        //setting the new node to the left of the parent
+        pNode.setLeft(leftNode);
+        size++;
+        return leftNode;
     }
 
     /**
@@ -195,7 +232,16 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
      */
     public Position<E> addRight(Position<E> p, E e) throws IllegalArgumentException {
         // TODO
-        return null;
+        Node<E>  pNode = validate(p);
+
+        if(pNode.getRight() != null){
+            return null;
+        }
+
+        Node<E> rightNode = createNode(e, pNode, null, null);
+        pNode.setRight(rightNode);
+        size++;
+        return rightNode;
     }
 
     /**
