@@ -28,6 +28,12 @@ public abstract class AbstractTree<E> implements Tree<E> {
     @Override
     public boolean isInternal(Position<E> p) {
         // TODO
+        if(p == null){
+            throw new IllegalArgumentException("Invalid Position of p in this tree");
+        }
+        if(numChildren(p) > 0){
+            return true;
+        }
         return false;
     }
 
@@ -41,7 +47,14 @@ public abstract class AbstractTree<E> implements Tree<E> {
     @Override
     public boolean isExternal(Position<E> p) {
         // TODO
-        return false;
+        if(p == null){
+            throw new IllegalArgumentException("Invalid position of p in the tree");
+        }
+
+        if(numChildren(p) > 0){
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -53,6 +66,9 @@ public abstract class AbstractTree<E> implements Tree<E> {
     @Override
     public boolean isRoot(Position<E> p) {
         // TODO
+        if(p == root()){
+            return true;
+        }
         return false;
     }
 
@@ -66,7 +82,17 @@ public abstract class AbstractTree<E> implements Tree<E> {
     @Override
     public int numChildren(Position<E> p) {
         // TODO
-        return 0;
+        if(p == null){
+            throw new IllegalArgumentException("Invalid position of p in the tree");
+        }
+
+        int count = 0;
+        //for every child in children(p) which returns iterable children
+        for(Position<E> child : children(p)){
+            count++;
+        }
+
+        return count;
     }
 
     /**
@@ -101,7 +127,12 @@ public abstract class AbstractTree<E> implements Tree<E> {
      */
     public int depth(Position<E> p) throws IllegalArgumentException {
         // TODO
-        return 0;
+        if(isRoot(p)){
+            return 0;
+        }
+        else{
+            return 1 + depth((parent(p)));
+        }
     }
 
     /**
@@ -119,7 +150,11 @@ public abstract class AbstractTree<E> implements Tree<E> {
 
     public int height_recursive(Position<E> p) {
         // TODO
-        return 0;
+        int h = 0;
+        for(Position<E> c : children(p)){
+            h =  Math.max(h, 1 + height_recursive(c));
+        }
+        return h;
     }
 
     /**
