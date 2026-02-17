@@ -406,13 +406,34 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         return positions().toString();
     }
 
+    //so you need to only one helper here
+    //because the helper recursively calls itself and
+    //creates the rest of the tree you just needed to call it to make the root
     public void createLevelOrder(ArrayList<E> l) {
         // TODO
+        createLevelOrderHelper(l,null,0);
+
     }
 
+    //l is the array list, p is the parent, i is position
+    //makes tree from array
     private Node<E> createLevelOrderHelper(java.util.ArrayList<E> l, Node<E> p, int i) {
         // TODO
-        return null;
+        if(i >= l.size() || l.get(i) == null){
+            return null;
+        }
+
+        //creates the node at said position
+        Node<E> curr = createNode(l.get(i), p, null, null);
+
+        //left child
+        curr.setLeft(createLevelOrderHelper(l, curr, 2* i + 1));
+
+        //right child
+        curr.setRight(createLevelOrderHelper(l, curr, 2* i + 2));
+
+        return curr;
+
     }
 
     public void createLevelOrder(E[] arr) {
@@ -421,7 +442,20 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
 
     private Node<E> createLevelOrderHelper(E[] arr, Node<E> p, int i) {
         // TODO
-        return null;
+        if(i >= arr.length || arr[i] == null){
+            return null;
+        }
+
+        //creates the node at said position
+        Node<E> curr = createNode(arr[i], p, null, null);
+
+        //left child
+        curr.setLeft(createLevelOrderHelper(arr, curr, 2* i + 1));
+
+        //right child
+        curr.setRight(createLevelOrderHelper(arr, curr, 2* i + 2));
+
+        return curr;
     }
 
     public String toBinaryTreeString() {
