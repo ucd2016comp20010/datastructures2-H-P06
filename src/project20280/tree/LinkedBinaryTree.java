@@ -59,6 +59,26 @@ public class LinkedBinaryTree<E> extends AbstractBinaryTree<E> {
         String[] arr = { "A", "B", "C", "D", "E", null, "F", null, null, "G", "H", null, null, null, null };
         bt.createLevelOrder(arr);
         System.out.println(bt.toBinaryTreeString());
+
+
+        System.out.println("n,time (nanoseconds)");
+
+        for (int n = 10; n <= 10000; n += 100) {
+            LinkedBinaryTree<Integer> tree = new LinkedBinaryTree<>();
+            tree.root = LinkedBinaryTree.randomTree(null, 1, n);
+            tree.size = n;
+
+            long start = System.nanoTime();
+
+
+            for (Position<Integer> p : tree.inorder()) {
+                p.getElement();
+            }
+
+            long end = System.nanoTime();
+
+            System.out.println(n + "," + (end - start));
+        }
     }
 
 

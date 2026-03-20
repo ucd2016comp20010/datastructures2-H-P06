@@ -354,6 +354,40 @@ public class SinglyLinkedList<E> implements List<E> {
         return this;
     }
 
+    //RECURSIVE REVERSE--------------------------------------------------------
+    public void recursiveReverse(Node<E> curr){
+        if(curr == null){
+            return;
+        }
+
+        recursiveReverse(curr.getNext());
+
+        System.out.print(curr.getElement() + " ");
+    }
+
+
+    //RECURSIVE COPY------------------------------------------------------
+    public SinglyLinkedList<E> recursiveCopy() {
+        SinglyLinkedList<E> newList = new SinglyLinkedList<>();
+        // Start the recursion at the head and set the new list's head
+        newList.head = copyHelper(this.head);
+        return newList;
+    }
+
+    public Node<E> copyHelper(Node<E> curr){
+        if(curr == null){
+            return null;
+        }
+
+        Node<E> newOne = new Node<>(curr.getElement(), null);
+
+
+        newOne.setNext(copyHelper(curr.getNext()));
+
+        return newOne;
+    }
+
+
     public static void main(String[] args) {
         SinglyLinkedList<Integer> ll = new SinglyLinkedList<Integer>();
         System.out.println("ll " + ll + " isEmpty: " + ll.isEmpty());
@@ -379,6 +413,12 @@ public class SinglyLinkedList<E> implements List<E> {
         System.out.println("this is the new linked list "+ll2);
 
         //System.out.println("this is the sortmerge " + ll.sortMerge(ll2));
+
+        //recursion lab
+        System.out.println("This is a reverse: ");
+        ll2.recursiveReverse(ll2.head);
+
+        System.out.println("\nCopied list = " + ll2.recursiveCopy().toString());
 
     }
 }
