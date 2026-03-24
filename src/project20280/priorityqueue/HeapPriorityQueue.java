@@ -7,6 +7,7 @@ import project20280.interfaces.Entry;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Arrays;
 
 
 /**
@@ -46,6 +47,11 @@ public class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
      */
     public HeapPriorityQueue(K[] keys, V[] values) {
         // TODO
+        for( int i = 0; i < keys.length; i++ ) {
+            heap.add(new PQEntry<>(keys[i], values[i]));
+        }
+
+        heapify();
 
     }
 
@@ -144,6 +150,9 @@ public class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
      */
     protected void heapify() {
         // TODO
+        for(int i=parent(size() -1 );  i >= 0; i--){
+            downheap(i);
+        }
     }
 
     // public methods
@@ -240,16 +249,26 @@ public class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
         Integer[] rands = new Integer[]{35, 26, 15, 24, 33, 4, 12, 1, 23, 21, 2, 5};
         HeapPriorityQueue<Integer, Integer> pq = new HeapPriorityQueue<>(rands, rands);
 
-        System.out.println("elements: " + rands);
-        System.out.println("after adding elements: " + pq);
+        System.out.println("elements: " + Arrays.toString(rands));
+        System.out.println("after adding elements fast way: " + pq);
 
-        System.out.println("min element: " + pq.min());
+        //slower way
+        HeapPriorityQueue<Integer, Integer> slower = new HeapPriorityQueue<>();
 
-        pq.removeMin();
-        System.out.println("after removeMin: " + pq);
-        // [             1,
-        //        2,            4,
-        //   23,     21,      5, 12,
-        // 24, 26, 35, 33, 15]
+        //iteratively populate the heap
+        for(Integer i : rands){
+            slower.insert(i, i);
+        }
+
+        System.out.println("Slower way to make it: " + slower);
+
+//        System.out.println("min element: " + pq.min());
+//
+//        pq.removeMin();
+//        System.out.println("after removeMin: " + pq);
+//        // [             1,
+//        //        2,            4,
+//        //   23,     21,      5, 12,
+//        // 24, 26, 35, 33, 15]
     }
 }
