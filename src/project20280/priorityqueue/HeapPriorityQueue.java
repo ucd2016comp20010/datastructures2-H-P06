@@ -245,6 +245,20 @@ public class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
         }
     }
 
+    //PQSORT WEEK 7 LAB
+    public static void pqSort(Integer[] data) {
+        //using the slower way to insert stuff into heap
+        HeapPriorityQueue<Integer, Integer> pq = new HeapPriorityQueue<>();
+
+        for (Integer x : data) {
+            pq.insert(x, x);
+        }
+
+        for (int i = 0; i < data.length; i++) {
+            data[i] = pq.removeMin().getKey();
+        }
+    }
+
     public static void main(String[] args) {
         Integer[] rands = new Integer[]{35, 26, 15, 24, 33, 4, 12, 1, 23, 21, 2, 5};
         HeapPriorityQueue<Integer, Integer> pq = new HeapPriorityQueue<>(rands, rands);
@@ -256,7 +270,7 @@ public class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
         HeapPriorityQueue<Integer, Integer> slower = new HeapPriorityQueue<>();
 
         //iteratively populate the heap
-        for(Integer i : rands){
+        for (Integer i : rands) {
             slower.insert(i, i);
         }
 
@@ -270,5 +284,31 @@ public class HeapPriorityQueue<K, V> extends AbstractPriorityQueue<K, V> {
 //        //        2,            4,
 //        //   23,     21,      5, 12,
 //        // 24, 26, 35, 33, 15]
+
+
+        //FIGURING OUT THE TIME COMPLEXITY
+        int[] sizes = {1000, 10000, 100000, 1000000};
+
+        System.out.println("n\t\tTime (ms)");
+        double previousTime = -1;
+
+        for (int n : sizes) {
+            Integer[] data = new Integer[n];
+            for (int i = 0; i < n; i++) {
+                data[i] = (int) (Math.random() * n * 10);
+            }
+
+            long startTime = System.currentTimeMillis();
+
+            pqSort(data);
+
+            long endTime = System.currentTimeMillis();
+            long duration = endTime - startTime;
+
+            System.out.println(n + "\t\t" + duration + " ms");
+
+            previousTime = duration;
+
+        }
     }
 }

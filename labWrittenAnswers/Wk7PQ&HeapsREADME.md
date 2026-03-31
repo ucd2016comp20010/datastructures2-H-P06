@@ -19,4 +19,9 @@ Preorder: 2,8,50,9,10
 Postorder: 50,9,8,10,2 
 From these results the two traversals do not list them in descending or ascending order.
 
+6.) To explain the algorithm as simply as possible, we populate the heap with elements and in the insert, it upheaps so it ensures that the smallest element is already at the top. At the end of it, the heap is in a way where the parent is smaller the children but it isn't sorted.
+Then we remove the smallest in the heap and put it in some data array. Since it calls removeMin and remove min utilises downheap, it "fixes" the orginal heap so that it still sticks to the minheap properties. You keep doing this until the whole data array is populated and the heap is empty. The array would be an array of elements going from smallest to largest. 
+The time complexity I was thinking is n log n and when i put it into a graphical form, it does show it being n log n. log n coming from the up and downheap and the n part coming from the loop.
+
+7.) 
 
