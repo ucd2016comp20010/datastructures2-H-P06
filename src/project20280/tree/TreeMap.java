@@ -349,6 +349,14 @@ public class TreeMap<K, V> extends AbstractSortedMap<K, V> {
         return p.getElement().getValue();
     }
 
+    public Iterable<K> keySet() {
+        ArrayList<K> keys = new ArrayList<>(size());
+        for (Entry<K, V> entry : entrySet()) {
+            keys.add(entry.getKey());
+        }
+        return keys;
+    }
+
     /**
      * Associates the given value with the given key. If an entry with the key was
      * already in the map, this replaced the previous value with the new one and
