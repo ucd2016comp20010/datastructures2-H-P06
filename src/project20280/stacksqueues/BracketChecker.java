@@ -1,5 +1,7 @@
 package project20280.stacksqueues;
 
+import java.util.Scanner;
+
 class BracketChecker {
     private final String input;
 
@@ -9,6 +11,41 @@ class BracketChecker {
 
     public void check() {
         // TODO
+        LinkedStack<Character> stack = new LinkedStack<>();
+        Scanner scanner = new Scanner(input);
+        scanner.useDelimiter("");
+
+        int i = 0;
+        while (scanner.hasNext()) {
+            char ch = scanner.next().charAt(0);
+
+            if (ch == '(' || ch == '[' || ch == '{') {
+                stack.push(ch);
+            } else if (ch == ')' || ch == ']' || ch == '}') {
+                if (stack.isEmpty()) {
+                    System.out.println("Not correct");
+                    scanner.close();
+                    return;
+                }
+                char open = stack.pop();
+                if ((ch == ')' && open != '(') ||
+                        (ch == ']' && open != '[') ||
+                        (ch == '}' && open != '{')) {
+                    System.out.println("Not correct");
+                    scanner.close();
+                    return;
+                }
+            }
+            i++;
+        }
+
+        scanner.close();
+
+        if (!stack.isEmpty()) {
+            System.out.println("Not correct");
+        } else {
+            System.out.println("Correct");
+        }
     }
 
     public static void main(String[] args) {
